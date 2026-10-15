@@ -1,0 +1,25 @@
+package Classes;
+
+import Exceptions.PositionInvalidException;
+import Interfaces.Command;
+
+public class BaseCommand implements Command {
+    private final int x;
+    private final int y;
+
+    public BaseCommand(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public int getX() { return x; }
+    public int getY() { return y; }
+
+    @Override
+    public void execute(Robot robot) {
+        if (!robot.isPositionValid(robot.getPosition(), robot.getBoard()))
+            throw new PositionInvalidException("The position you are in or trying to move into is invalid.");
+
+        robot.setPosition(new Position(this.x, this.y));
+    }
+}
