@@ -1,5 +1,6 @@
-package Classes;
+package Commands;
 
+import Classes.Robot;
 import Enumerators.Direction;
 import Interfaces.Command;
 
@@ -11,7 +12,8 @@ public class DirectionCommand implements Command {
     public Direction getDirection() { return direction; }
 
     @Override
-    public void execute(Robot robot) {
-        robot.setDirection(this.direction);
-    }
+    public void execute(Robot robot) { robot.setDirection(this.direction); }
+
+    @Override
+    public Command getInverse() { return new DirectionCommand(this.direction.getOpposite()); }
 }

@@ -1,5 +1,6 @@
 package Classes;
 
+import Commands.*;
 import Enumerators.Direction;
 import Interfaces.Command;
 import Interfaces.CommandFactory;
@@ -17,6 +18,11 @@ public class CommandParser {
         this.factories.put("dir", args -> new DirectionCommand(Direction.valueOf(args[1])));
         this.factories.put("mov", args -> new MoveCommand(Integer.parseInt(args[1])));
         this.factories.put("drop", args -> new DropCommand());
+        this.factories.put("startM", args -> new StartMCommand());
+        this.factories.put("stopM", args -> new StopMCommand());
+        this.factories.put("resM", args -> new ResMCommand());
+        this.factories.put("replay", args -> new ReplayCommand());
+        this.factories.put("wback", args -> new WBackCommand());
     }
 
     public Command parseLine(String line) {

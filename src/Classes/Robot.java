@@ -1,18 +1,23 @@
 package Classes;
 
+import Commands.*;
 import Enumerators.Direction;
 import Exceptions.DirectionDoesNotExistException;
 import Exceptions.PositionInvalidException;
 import Interfaces.Command;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 public class Robot {
     private Position position;
     private Direction direction;
     private Board board;
 
-    private CommandParser commandParser;
+    private final CommandParser commandParser;
+    private List<Command> commandsList;
+    private boolean isRecording;
 
     public Robot(Board board) {
         this.position = new Position(0, 0);
@@ -20,6 +25,8 @@ public class Robot {
         this.board = board;
 
         this.commandParser = new CommandParser();
+        this.commandsList = new ArrayList<>();
+        this.isRecording = true;
     }
 
     public Position getPosition() { return position; }
@@ -42,6 +49,12 @@ public class Robot {
     public Board getBoard() { return board; }
     public void setBoard(Board board) { this.board = board; }
 
+    public void setCommandsList(List<Command> commandsList) { this.commandsList = commandsList; }
+    public List<Command> getCommandsList() { return commandsList; }
+
+    public boolean isRecording() { return isRecording; }
+    public void setRecording(boolean recording) { isRecording = recording; }
+
     public boolean isPositionValid(Position position, Board board) {
         return position.getX() >= 0 && position.getX() < board.getWidth() &&
                 position.getY() >= 0 && position.getY() < board.getHeight();
@@ -62,10 +75,42 @@ public class Robot {
         this.setPosition(newPosition);
     }
 
+    public void replay() {
+        List<Command> historyToReplay = new ArrayList<>(this.commandsList);
+        for (Command command: historyToReplay) {
+            command.execute(this);
+        }
+    }
+
+    public void goBack() {
+        List<Command> historyToReplay = new ArrayList<>(this.commandsList);
+        ListIterator<Command> iterator = historyToReplay.listIterator(historyToReplay.size());
+
+        while(iterator.hasPrevious()){
+            Command command = iterator.previous().getInverse();
+
+            if (command != null) {
+                command.execute(this);
+            }
+        }
+    }
+
     public void execute(String script) {
         List<Command> commands = this.commandParser.parseScript(script);
         for (Command command: commands) {
             command.execute(this);
+
+            if (this.isRecording && isRecorable(command)) {
+                this.commandsList.add(command);
+            }
         }
+    }
+
+    public boolean isRecorable(Command command) {
+        return !(command instanceof StartMCommand ||
+                command instanceof StopMCommand ||
+                command instanceof ResMCommand ||
+                command instanceof ReplayCommand ||
+                command instanceof WBackCommand);
     }
 }

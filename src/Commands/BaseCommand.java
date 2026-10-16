@@ -1,5 +1,7 @@
-package Classes;
+package Commands;
 
+import Classes.Position;
+import Classes.Robot;
 import Exceptions.PositionInvalidException;
 import Interfaces.Command;
 
@@ -22,4 +24,7 @@ public class BaseCommand implements Command {
 
         robot.setPosition(new Position(this.x, this.y));
     }
+
+    @Override
+    public Command getInverse() { return null; }
 }

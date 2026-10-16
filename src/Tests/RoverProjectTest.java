@@ -1,6 +1,7 @@
 package Tests;
 
 import Classes.*;
+import Commands.*;
 import Enumerators.Direction;
 import Interfaces.Command;
 import org.junit.jupiter.api.BeforeEach;
@@ -108,7 +109,6 @@ public class RoverProjectTest {
         Command command = new DropCommand();
         command.execute(robot);
 
-        // Vérifie qu'un objet a bien été déposé sur la case courante du robot
         assertNotNull(board.getAt(new Position(3, 3)));
         assertNotEquals(robot, board.getAt(new Position(3, 3)));
     }
@@ -130,5 +130,83 @@ public class RoverProjectTest {
 
         Command dropCmd = parser.parseLine("drop");
         assertInstanceOf(DropCommand.class, dropCmd);
+
+        Command startMCmd = parser.parseLine("startM");
+        assertInstanceOf(StartMCommand.class, startMCmd);
+
+        Command stopMCmd = parser.parseLine("stopM");
+        assertInstanceOf(StopMCommand.class, stopMCmd);
+
+        Command resMCmd = parser.parseLine("resM");
+        assertInstanceOf(ResMCommand.class, resMCmd);
+
+        Command replayCmd = parser.parseLine("replay");
+        assertInstanceOf(ReplayCommand.class, replayCmd);
+    }
+
+    // ==========================================
+    // TESTS DE L'ÉTAPE 4 (MACRO & REPLAY)
+    // ==========================================
+
+    @Test
+    public void testEnregistrementCommandesOrdre() {
+        robot.execute("dir EAST\nmov 5\ndir NORTH\nmov 3");
+
+        assertEquals(4, robot.getCommandsList().size());
+        assertInstanceOf(DirectionCommand.class, robot.getCommandsList().get(0));
+        assertInstanceOf(MoveCommand.class, robot.getCommandsList().get(1));
+        assertInstanceOf(DirectionCommand.class, robot.getCommandsList().get(2));
+        assertInstanceOf(MoveCommand.class, robot.getCommandsList().get(3));
+    }
+
+    @Test
+    public void testStopMEmpecheEnregistrement() {
+        robot.execute("mov 5\nstopM\nmov 3");
+
+        assertEquals(1, robot.getCommandsList().size());
+        assertEquals(new Position(8, 0), robot.getPosition());
+    }
+
+    @Test
+    public void testResMVideHistorique() {
+        robot.execute("mov 5\ndir NORTH\nmov 2");
+        assertFalse(robot.getCommandsList().isEmpty());
+
+        robot.execute("resM");
+        assertTrue(robot.getCommandsList().isEmpty());
+    }
+
+    @Test
+    public void testNonEnregistrementCommandesControle() {
+        robot.execute("startM\nmov 5\nstopM\nresM\nreplay");
+
+        assertTrue(robot.getCommandsList().isEmpty());
+    }
+
+    @Test
+    public void testReplayParcours() {
+        robot.setPosition(new Position(4, 1));
+
+        robot.execute("dir EAST\nmov 2\nmov 3\ndir NORTH\nmov 3");
+        assertEquals(new Position(9, 4), robot.getPosition());
+
+        robot.setPosition(new Position(5, 1));
+        robot.setDirection(Direction.EAST);
+
+        robot.replay();
+
+        assertEquals(new Position(10, 4), robot.getPosition());
+        assertSame(robot, board.getAt(new Position(10, 4)));
+    }
+
+    @Test
+    public void testWBackCommand() {
+        robot.execute("mov 5\ndir NORTH\nmov 3");
+        assertEquals(new Position(5, 3), robot.getPosition());
+        assertEquals(Direction.NORTH, robot.getDirection());
+
+        robot.execute("wback");
+
+        assertEquals(new Position(0, 0), robot.getPosition());
     }
 }
