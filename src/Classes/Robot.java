@@ -7,6 +7,7 @@ import Exceptions.PositionInvalidException;
 import Interfaces.Command;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -93,6 +94,33 @@ public class Robot {
                 command.execute(this);
             }
         }
+    }
+
+    public List<Command> optimizePath(List<Command> commands) {
+        List<Command> optimized = new ArrayList<>();
+
+        for (Command current : commands) {
+            if (optimized.isEmpty()) {
+                optimized.add(current);
+                continue;
+            }
+
+            Command last = optimized.get(optimized.size() - 1);
+
+            if (last.getClass().equals(current.getClass())) {
+                Command merged = last.mergeWith(List.of(current));
+
+                optimized.remove(optimized.size() - 1);
+
+                if (merged != null) {
+                    optimized.add(merged);
+                }
+            } else {
+                optimized.add(current);
+            }
+        }
+
+        return optimized;
     }
 
     public void execute(String script) {

@@ -2,8 +2,16 @@ package Interfaces;
 
 import Classes.Robot;
 
+import java.util.List;
+
 public interface Command {
     void execute(Robot robot);
 
-    Command getInverse();
+    default Command getInverse() {
+        return null;
+    }
+
+    default Command mergeWith(List<Command> other) {
+        return null;
+    }
 }

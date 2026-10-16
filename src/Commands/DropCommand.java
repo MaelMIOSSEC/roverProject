@@ -8,7 +8,4 @@ public class DropCommand implements Command {
     public void execute(Robot robot) {
         robot.getBoard().putAt(robot.getPosition(), new Object(), robot);
     }
-
-    @Override
-    public Command getInverse() { return null; }
 }

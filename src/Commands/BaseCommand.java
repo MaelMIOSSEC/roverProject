@@ -5,17 +5,7 @@ import Classes.Robot;
 import Exceptions.PositionInvalidException;
 import Interfaces.Command;
 
-public class BaseCommand implements Command {
-    private final int x;
-    private final int y;
-
-    public BaseCommand(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    public int getX() { return x; }
-    public int getY() { return y; }
+public record BaseCommand(int x, int y) implements Command {
 
     @Override
     public void execute(Robot robot) {
@@ -24,7 +14,4 @@ public class BaseCommand implements Command {
 
         robot.setPosition(new Position(this.x, this.y));
     }
-
-    @Override
-    public Command getInverse() { return null; }
 }

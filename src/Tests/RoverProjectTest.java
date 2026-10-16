@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -208,5 +209,50 @@ public class RoverProjectTest {
         robot.execute("wback");
 
         assertEquals(new Position(0, 0), robot.getPosition());
+    }
+
+    // ==========================================
+    // TESTS DE L'ÉTAPE 6 (OPTIMISATION DE PATH)
+    // ==========================================
+
+    @Test
+    public void testDeuxDeplacementsSuccessifsFusionnes() {
+        List<Command> original = parser.parseScript("mov 4\nmov 6");
+        List<Command> optimise = robot.optimizePath(original);
+
+        assertEquals(1, optimise.size());
+        assertInstanceOf(MoveCommand.class, optimise.get(0));
+        assertEquals(10, ((MoveCommand) optimise.get(0)).distance());
+    }
+
+    @Test
+    public void testDeuxChangementsDirectionSuccessifsFusionnes() {
+        List<Command> original = parser.parseScript("dir NORTH\ndir WEST");
+        List<Command> optimise = robot.optimizePath(original);
+
+        assertEquals(1, optimise.size());
+        assertInstanceOf(DirectionCommand.class, optimise.get(0));
+        assertEquals(Direction.WEST, ((DirectionCommand) optimise.get(0)).getDirection());
+    }
+
+    @Test
+    public void testCommandesIncompatiblesRestentDistinctes() {
+        List<Command> original = parser.parseScript("mov 5\ndir NORTH\ndrop");
+        List<Command> optimise = robot.optimizePath(original);
+
+        assertEquals(3, optimise.size());
+        assertInstanceOf(MoveCommand.class, optimise.get(0));
+        assertInstanceOf(DirectionCommand.class, optimise.get(1));
+        assertInstanceOf(DropCommand.class, optimise.get(2));
+    }
+
+    @Test
+    public void testSequenceTroisDeplacementsOuPlusOptimisee() {
+        List<Command> original = parser.parseScript("mov 2\nmov 3\nmov 5\nmov -1");
+        List<Command> optimise = robot.optimizePath(original);
+
+        assertEquals(1, optimise.size());
+        assertInstanceOf(MoveCommand.class, optimise.get(0));
+        assertEquals(9, ((MoveCommand) optimise.get(0)).distance());
     }
 }
