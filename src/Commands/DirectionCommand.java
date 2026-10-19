@@ -22,17 +22,14 @@ public class DirectionCommand implements Command {
 
     @Override
     public Command getInverse() {
-        if (this.previousDirection == null) {
-            return null;
-        }
+        if (this.previousDirection == null) return null;
+
         return new DirectionCommand(this.previousDirection);
     }
 
     @Override
     public Command mergeWith(List<Command> commandsList) {
-        if (commandsList == null || commandsList.isEmpty()) {
-            return null;
-        }
+        if (commandsList == null || commandsList.isEmpty()) return null;
 
         boolean allAreDirections = commandsList.stream()
                 .allMatch(DirectionCommand.class::isInstance);

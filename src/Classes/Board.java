@@ -30,24 +30,19 @@ public class Board {
     public void setColor(String color) { this.color = color; }
 
     public Object getAt(Position position) {
-        if (this.occupants.containsKey(position)) {
-            return this.occupants.get(position);
-        }
+        if (this.occupants.containsKey(position)) return this.occupants.get(position);
 
         return this.grounds.get(position);
     }
 
     public void putAt(Position position, Object element, Robot robot) {
-        if (robot.isPositionValid(position, this)) {
+        if (robot.isPositionValid(position, this))
             throw new ImpossibleToPoseAtThisLocationException("The item cannot be placed outside the field. Action impossible.");
-        }
 
         this.occupants.put(position, element);
     }
 
     public void removeRobot(Position position, Robot robot) {
-        if (this.occupants.get(position) == robot) {
-            this.occupants.remove(position);
-        }
+        if (this.occupants.get(position) == robot) this.occupants.remove(position);
     }
 }

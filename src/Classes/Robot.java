@@ -32,9 +32,7 @@ public class Robot {
     public Position getPosition() { return position; }
     public void setPosition(Position newPosition) {
         if (this.board != null) {
-            if (this.position != null) {
-                this.board.removeRobot(this.position, this);
-            }
+            if (this.position != null) this.board.removeRobot(this.position, this);
 
             this.position = newPosition;
             this.board.putAt(newPosition, this, this);
@@ -86,9 +84,7 @@ public class Robot {
         while(iterator.hasPrevious()){
             Command command = iterator.previous().getInverse();
 
-            if (command != null) {
-                command.execute(this);
-            }
+            if (command != null) command.execute(this);
         }
     }
 
@@ -98,6 +94,7 @@ public class Robot {
         for (Command current : commands) {
             if (optimized.isEmpty()) {
                 optimized.add(current);
+
                 continue;
             }
 
@@ -108,9 +105,7 @@ public class Robot {
 
                 optimized.remove(optimized.size() - 1);
 
-                if (merged != null) {
-                    optimized.add(merged);
-                }
+                if (merged != null) optimized.add(merged);
             } else {
                 optimized.add(current);
             }
@@ -124,9 +119,7 @@ public class Robot {
         for (Command command: commands) {
             command.execute(this);
 
-            if (this.isRecording && isRecordable(command)) {
-                this.commandsList.add(command);
-            }
+            if (this.isRecording && isRecordable(command)) this.commandsList.add(command);
         }
     }
 

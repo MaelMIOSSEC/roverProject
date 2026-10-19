@@ -27,9 +27,7 @@ public record MoveCommand(int distance) implements Command {
         int newDistance = this.distance;
 
         for (Command command : commandsList) {
-            if (command instanceof MoveCommand movecommand) {
-                newDistance += movecommand.distance();
-            }
+            if (command instanceof MoveCommand movecommand) newDistance += movecommand.distance();
         }
 
         if (newDistance == 0) return null;

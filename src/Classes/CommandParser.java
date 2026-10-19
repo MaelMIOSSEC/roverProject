@@ -27,19 +27,15 @@ public class CommandParser {
 
     public Command parseLine(String line) {
         String trimmedLine = line.trim();
-        if (trimmedLine.isEmpty()) {
-            return null;
-        }
+        if (trimmedLine.isEmpty()) return null;
 
         String[] args = trimmedLine.split("\\s+");
         String commandName = args[0];
 
         CommandFactory factory = this.factories.get(commandName);
-        if (factory != null) {
-            return factory.create(args);
-        } else {
-            throw new IllegalArgumentException("Commande inconnue : " + commandName);
-        }
+
+        if (factory != null) return factory.create(args);
+        else throw new IllegalArgumentException("Commande inconnue : " + commandName);
     }
 
     public List<Command> parseScript(String script) {
@@ -48,9 +44,7 @@ public class CommandParser {
         for (String line : script.split("\r?\n")) {
             Command command = parseLine(line);
 
-            if (command != null) {
-                commands.add(command);
-            }
+            if (command != null) commands.add(command);
         }
 
         return commands;
