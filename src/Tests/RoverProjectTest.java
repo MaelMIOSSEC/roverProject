@@ -1,9 +1,7 @@
 package Tests;
 
-import Classes.*;
-import Commands.*;
-import Enumerators.Direction;
-import Interfaces.Command;
+import Command.*;
+import Model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

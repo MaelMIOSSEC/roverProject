@@ -1,7 +1,6 @@
-package Commands;
+package Command;
 
-import Classes.Robot;
-import Interfaces.Command;
+import Model.Robot;
 
 /**
  * Commande qui dépose un nouvel objet à la position actuelle du robot.

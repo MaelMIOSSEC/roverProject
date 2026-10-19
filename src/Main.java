@@ -1,4 +1,4 @@
-import Classes.RoverVisualizer;
+import View.RoverVisualizer;
 
 import javax.swing.SwingUtilities;
 

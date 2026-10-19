@@ -1,10 +1,9 @@
-package Classes;
+package Model;
 
-import Commands.*;
-import Enumerators.Direction;
+import Command.*;
 import Exceptions.DirectionDoesNotExistException;
 import Exceptions.PositionInvalidException;
-import Interfaces.Command;
+import Observer.RoverSubject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.ListIterator;
 /**
  * Robot pouvant se déplacer sur un terrain et exécuter des commandes.
  */
-public class Robot {
+public class Robot extends RoverSubject {
     /** Position actuelle du robot. */
     private Position position;
     /** Direction actuelle du robot. */
@@ -59,6 +58,8 @@ public class Robot {
         } else {
             this.position = newPosition;
         }
+
+        this.notifyObserver(this, this.board);
     }
 
     /** @return direction actuelle du robot */
@@ -68,7 +69,10 @@ public class Robot {
      *
      * @param direction nouvelle direction
      */
-    public void setDirection(Direction direction) { this.direction = direction; }
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+        this.notifyObserver(this, this.board);
+    }
 
     /** @return terrain associé au robot */
     public Board getBoard() { return board; }

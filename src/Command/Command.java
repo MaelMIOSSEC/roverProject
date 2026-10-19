@@ -1,6 +1,6 @@
-package Interfaces;
+package Command;
 
-import Classes.Robot;
+import Model.Robot;
 
 import java.util.List;
 

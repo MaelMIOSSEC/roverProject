@@ -1,6 +1,7 @@
-package Classes;
+package Model;
 
 import Exceptions.ImpossibleToPoseAtThisLocationException;
+import Observer.RoverSubject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +9,7 @@ import java.util.Map;
 /**
  * Représente le terrain de jeu et les éléments qui occupent ses cases.
  */
-public class Board {
+public class Board extends RoverSubject {
     /** Largeur du terrain, exprimée en cases. */
     private int width;
     /** Hauteur du terrain, exprimée en cases. */
@@ -88,6 +89,8 @@ public class Board {
             throw new ImpossibleToPoseAtThisLocationException("The item cannot be placed outside the field. Action impossible.");
 
         this.occupants.put(position, element);
+
+        this.notifyObserver(robot, this);
     }
 
     /**

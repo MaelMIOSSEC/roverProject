@@ -1,4 +1,4 @@
-package Interfaces;
+package Command;
 
 /**
  * Fabrique une commande à partir des arguments analysés d'une ligne de script.

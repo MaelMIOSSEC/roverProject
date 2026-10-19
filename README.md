@@ -6,7 +6,7 @@ Une simulation de rover en Java : écrivez un script de commandes, exécutez-le 
 
 - Terrain de **20 × 20 cases**, avec coordonnées de `0` à `19`.
 - Rover initialisé en `(0, 0)`, orienté vers l’est.
-- Interface graphique simple : éditeur de script, bouton d’exécution et aperçu du terrain.
+- Interface graphique MVC avec deux vues Nicellipse distinctes : la grille du terrain et l'éditeur de script.
 - Exécution des commandes en séquence, avec affichage de la position et des éventuelles erreurs.
 - Commandes pour enregistrer, rejouer et inverser un parcours.
 
@@ -14,7 +14,7 @@ Une simulation de rover en Java : écrivez un script de commandes, exécutez-le 
 
 Le projet nécessite **Java 17**. Ouvrez-le dans IntelliJ IDEA, puis lancez la méthode `main` de la classe `Main`.
 
-La fenêtre affiche le terrain à gauche et l’éditeur de script à droite. Saisissez les commandes sur des lignes séparées et cliquez sur **Exécuter**. **Réinitialiser** remet le rover et le terrain dans leur état initial.
+La vue **Terrain** affiche la grille et la position du rover. Cliquez sur **Ouvrir le script** pour accéder à l’éditeur, puis sur **Exécuter** pour lancer les commandes et revenir à la grille. **Réinitialiser** remet le rover et le terrain dans leur état initial. Les modèles (`Board`, `Robot`), les vues Nicellipse et le contrôleur sont séparés selon le pattern MVC.
 
 ## Écrire un script
 

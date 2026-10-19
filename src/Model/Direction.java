@@ -1,4 +1,4 @@
-package Enumerators;
+package Model;
 
 /**
  * Directions cardinales possibles pour le déplacement du robot.

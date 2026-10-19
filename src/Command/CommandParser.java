@@ -1,9 +1,6 @@
-package Classes;
+package Command;
 
-import Commands.*;
-import Enumerators.Direction;
-import Interfaces.Command;
-import Interfaces.CommandFactory;
+import Model.Direction;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package Classes;
+package Model;
 
 /**
  * Représente une case de sol du terrain.

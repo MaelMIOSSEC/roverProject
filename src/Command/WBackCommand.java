@@ -1,7 +1,6 @@
-package Commands;
+package Command;
 
-import Classes.Robot;
-import Interfaces.Command;
+import Model.Robot;
 
 /**
  * Commande qui annule les commandes enregistrées du robot.

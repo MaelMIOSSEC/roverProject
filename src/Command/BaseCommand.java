@@ -1,9 +1,8 @@
-package Commands;
+package Command;
 
-import Classes.Position;
-import Classes.Robot;
+import Model.Position;
+import Model.Robot;
 import Exceptions.PositionInvalidException;
-import Interfaces.Command;
 
 /**
  * Commande qui place le robot aux coordonnées indiquées.

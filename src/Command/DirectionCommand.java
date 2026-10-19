@@ -1,8 +1,7 @@
-package Commands;
+package Command;
 
-import Classes.Robot;
-import Enumerators.Direction;
-import Interfaces.Command;
+import Model.Robot;
+import Model.Direction;
 
 import java.util.List;
 
