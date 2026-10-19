@@ -11,7 +11,5 @@ public interface Command {
         return null;
     }
 
-    default Command mergeWith(List<Command> other) {
-        return null;
-    }
+    default Command mergeWith(List<Command> other) { return null; }
 }

@@ -7,17 +7,16 @@ import Exceptions.PositionInvalidException;
 import Interfaces.Command;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 
 public class Robot {
     private Position position;
     private Direction direction;
-    private Board board;
+    private final Board board;
 
     private final CommandParser commandParser;
-    private List<Command> commandsList;
+    private final List<Command> commandsList;
     private boolean isRecording;
 
     public Robot(Board board) {
@@ -48,21 +47,18 @@ public class Robot {
     public void setDirection(Direction direction) { this.direction = direction; }
 
     public Board getBoard() { return board; }
-    public void setBoard(Board board) { this.board = board; }
 
-    public void setCommandsList(List<Command> commandsList) { this.commandsList = commandsList; }
     public List<Command> getCommandsList() { return commandsList; }
 
-    public boolean isRecording() { return isRecording; }
     public void setRecording(boolean recording) { isRecording = recording; }
 
     public boolean isPositionValid(Position position, Board board) {
-        return position.getX() >= 0 && position.getX() < board.getWidth() &&
-                position.getY() >= 0 && position.getY() < board.getHeight();
+        return position.getX() < 0 || position.getX() >= board.getWidth() ||
+                position.getY() < 0 || position.getY() >= board.getHeight();
     }
 
     public void move(int distance) {
-        if (!isPositionValid(this.position, this.board) || this.position == null)
+        if (isPositionValid(this.position, this.board) || this.position == null)
             throw new PositionInvalidException("The position you are in or trying to move into is invalid.");
 
         Position newPosition = switch (this.direction) {
@@ -128,13 +124,13 @@ public class Robot {
         for (Command command: commands) {
             command.execute(this);
 
-            if (this.isRecording && isRecorable(command)) {
+            if (this.isRecording && isRecordable(command)) {
                 this.commandsList.add(command);
             }
         }
     }
 
-    public boolean isRecorable(Command command) {
+    public boolean isRecordable(Command command) {
         return !(command instanceof StartMCommand ||
                 command instanceof StopMCommand ||
                 command instanceof ResMCommand ||

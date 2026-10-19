@@ -38,7 +38,7 @@ public class Board {
     }
 
     public void putAt(Position position, Object element, Robot robot) {
-        if (!robot.isPositionValid(position, this)) {
+        if (robot.isPositionValid(position, this)) {
             throw new ImpossibleToPoseAtThisLocationException("The item cannot be placed outside the field. Action impossible.");
         }
 
