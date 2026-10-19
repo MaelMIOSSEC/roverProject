@@ -19,20 +19,36 @@ import java.awt.GridLayout;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Fenêtre Swing permettant de saisir des commandes et de visualiser le rover sur son terrain.
+ */
 public final class RoverVisualizer extends JFrame {
+    /** Nombre de cases sur chaque côté du terrain affiché. */
     private static final int BOARD_SIZE = 20;
+    /** Taille d'une case affichée en pixels. */
     private static final int CELL_SIZE = 18;
+    /** Couleur de fond des cases sans objet. */
     private static final Color EMPTY_CELL = new Color(232, 238, 244);
+    /** Couleur des lignes de la grille. */
     private static final Color GRID_LINE = new Color(195, 205, 215);
+    /** Couleur du marqueur représentant le rover. */
     private static final Color ROVER_COLOR = new Color(38, 166, 125);
 
+    /** Espace graphique représentant le terrain. */
     private final NiSpace boardView = new NiSpace("Terrain", new Dimension(390, 390));
+    /** Zone contenant le script de commandes à exécuter. */
     private final JTextArea scriptArea = new JTextArea(
             "base 3 3\ndir EAST\nmov 5\ndir NORTH\nmov 4\ndrop");
+    /** Étiquette de retour d'état affichée sous les boutons. */
     private final JLabel status = new JLabel(" ");
+    /** Modèle du terrain actuellement visualisé. */
     private Board board;
+    /** Robot actuellement visualisé. */
     private Robot robot;
 
+    /**
+     * Construit et initialise la fenêtre de visualisation.
+     */
     public RoverVisualizer() {
         super("Visualiseur du rover");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,6 +59,11 @@ public final class RoverVisualizer extends JFrame {
         setLocationRelativeTo(null);
     }
 
+    /**
+     * Crée le panneau principal, la carte, la zone de script et les commandes de l'interface.
+     *
+     * @return panneau contenant l'interface complète
+     */
     private JPanel createContent() {
         JPanel content = new JPanel(new BorderLayout(16, 0));
         content.setBorder(BorderFactory.createEmptyBorder(16, 16, 12, 16));
@@ -80,6 +101,9 @@ public final class RoverVisualizer extends JFrame {
         return content;
     }
 
+    /**
+     * Initialise un terrain vide de taille {@value #BOARD_SIZE} et son robot.
+     */
     private void createWorld() {
         Map<Position, Ground> grounds = new HashMap<>();
         for (int x = 0; x < BOARD_SIZE; x++) {
@@ -91,6 +115,9 @@ public final class RoverVisualizer extends JFrame {
         robot = new Robot(board);
     }
 
+    /**
+     * Exécute le script saisi puis affiche le résultat ou le message d'erreur.
+     */
     private void executeScript() {
         try {
             robot.execute(scriptArea.getText());
@@ -104,6 +131,9 @@ public final class RoverVisualizer extends JFrame {
         refreshView();
     }
 
+    /**
+     * Crée un nouveau terrain et efface le retour d'état précédent.
+     */
     private void resetWorld() {
         createWorld();
         status.setForeground(Color.DARK_GRAY);
@@ -111,6 +141,9 @@ public final class RoverVisualizer extends JFrame {
         refreshView();
     }
 
+    /**
+     * Redessine la grille, les objets déposés et la position du rover.
+     */
     private void refreshView() {
         boardView.removeAll();
         boardView.setLayout(null);

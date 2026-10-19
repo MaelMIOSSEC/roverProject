@@ -1,3 +1,11 @@
 package Classes;
 
-public class Ground {  public Ground() { /* TODO document why this constructor is empty */ } }
+/**
+ * Représente une case de sol du terrain.
+ */
+public class Ground {
+    /**
+     * Crée une case de sol sans attribut supplémentaire.
+     */
+    public Ground() { }
+}
