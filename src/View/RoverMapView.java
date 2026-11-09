@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Dimension;
 
+import Events.RobotMovedEvent;
 import Model.Board;
 import Model.Ground;
 import Model.Position;
@@ -15,12 +16,12 @@ import nicellipse.component.NiEllipse;
 import nicellipse.component.NiRectangle;
 import nicellipse.component.NiSpace;
 
-import Observer.RoverObserver;
+import Interfaces.RoverListener;
 
 /**
  * Vue Nicellipse de la grille de déplacement et de la position du rover.
  */
-public final class RoverMapView extends NiSpace implements RoverObserver {
+public final class RoverMapView extends NiSpace implements RoverListener {
     private static final int CELL_SIZE = 18;
     private static final Color EMPTY_CELL = new Color(232, 238, 244);
     private static final Color GRID_LINE = new Color(195, 205, 215);
@@ -98,7 +99,8 @@ public final class RoverMapView extends NiSpace implements RoverObserver {
     }
 
     @Override
-    public void update(Robot robot, Board board) {
-        this.showWorld(board, robot);
+    public void parameterChanged(RobotMovedEvent e) {
+        Robot robot = (Robot) e.getSource();
+        this.showWorld(robot.getBoard(), robot);
     }
 }
