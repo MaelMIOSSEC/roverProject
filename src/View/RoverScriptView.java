@@ -1,17 +1,18 @@
 package View;
 
-import nicellipse.component.NiSpace;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+
+import nicellipse.component.NiSpace;
 
 /**
  * Vue Nicellipse de saisie et d'exécution du script de commandes.

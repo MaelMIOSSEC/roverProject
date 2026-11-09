@@ -1,15 +1,18 @@
 package Model;
 
-import Exceptions.ImpossibleToPoseAtThisLocationException;
-import Observer.RoverSubject;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import Events.RobotMovedEvent;
+
+import Exceptions.ImpossibleToPoseAtThisLocationException;
+
+import eventHandler.EventHandler;
 
 /**
  * Représente le terrain de jeu et les éléments qui occupent ses cases.
  */
-public class Board extends RoverSubject {
+public class Board extends EventHandler /*extends RoverSubject*/ {
     /** Largeur du terrain, exprimée en cases. */
     private int width;
     /** Hauteur du terrain, exprimée en cases. */
@@ -90,7 +93,8 @@ public class Board extends RoverSubject {
 
         this.occupants.put(position, element);
 
-        this.notifyObserver(robot, this);
+        //this.notifyObserver(robot, this);
+        this.send(new RobotMovedEvent(this));
     }
 
     /**

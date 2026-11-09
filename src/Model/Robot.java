@@ -1,18 +1,23 @@
 package Model;
 
-import Command.*;
-import Exceptions.DirectionDoesNotExistException;
-import Exceptions.PositionInvalidException;
-import Observer.RoverSubject;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import Exceptions.DirectionDoesNotExistException;
+import Exceptions.PositionInvalidException;
+
+import Command.*;
+
+import Events.RobotMovedEvent;
+
+import eventHandler.EventHandler;
+
 /**
  * Robot pouvant se déplacer sur un terrain et exécuter des commandes.
  */
-public class Robot extends RoverSubject {
+public class Robot extends EventHandler /*extends RoverSubject*/ {
     /** Position actuelle du robot. */
     private Position position;
     /** Direction actuelle du robot. */
@@ -59,7 +64,8 @@ public class Robot extends RoverSubject {
             this.position = newPosition;
         }
 
-        this.notifyObserver(this, this.board);
+        // this.notifyObserver(this, this.board);
+        this.send(new RobotMovedEvent(this));
     }
 
     /** @return direction actuelle du robot */
@@ -71,7 +77,8 @@ public class Robot extends RoverSubject {
      */
     public void setDirection(Direction direction) {
         this.direction = direction;
-        this.notifyObserver(this, this.board);
+        //this.notifyObserver(this, this.board);
+        this.send(new RobotMovedEvent(this));
     }
 
     /** @return terrain associé au robot */
@@ -104,7 +111,6 @@ public class Robot extends RoverSubject {
      *
      * @param distance nombre de cases à parcourir, éventuellement négatif
      * @throws PositionInvalidException si la position actuelle est invalide
-     * @throws ImpossibleToPoseAtThisLocationException si la destination est hors du terrain
      * @throws DirectionDoesNotExistException si la direction ne peut pas être traitée
      */
     public void move(int distance) {

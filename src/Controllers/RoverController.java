@@ -4,17 +4,21 @@ import Command.ResMCommand;
 import Command.StartMCommand;
 import Command.StopMCommand;
 import Command.WBackCommand;
-import Model.Board;
-import Model.Ground;
-import Model.Position;
-import Model.Robot;
-import View.RoverMapView;
-import View.RoverScriptView;
 
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
+
+import Model.Board;
+import Model.Ground;
+import Model.Position;
+import Model.Robot;
+
+import View.RoverMapView;
+import View.RoverScriptView;
+
+import Events.RobotMovedEvent;
 
 /**
  * Contrôleur qui relie les vues aux modèles Board et Robot.
@@ -56,7 +60,7 @@ public final class RoverController {
         board = new Board(BOARD_SIZE, BOARD_SIZE, "blue", grounds);
         robot = new Robot(board);
 
-        robot.attachObserver(mapView);
+        robot.registerListener(RobotMovedEvent.class, mapView);
     }
 
     private void executeScript() {

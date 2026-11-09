@@ -1,19 +1,21 @@
 package View;
 
-import Model.Board;
-import Model.Ground;
-import Model.Position;
-import Model.Robot;
-import Observer.RoverObserver;
-import nicellipse.component.NiEllipse;
-import nicellipse.component.NiRectangle;
-import nicellipse.component.NiSpace;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Dimension;
+
+import Model.Board;
+import Model.Ground;
+import Model.Position;
+import Model.Robot;
+
+import nicellipse.component.NiEllipse;
+import nicellipse.component.NiRectangle;
+import nicellipse.component.NiSpace;
+
+import Observer.RoverObserver;
 
 /**
  * Vue Nicellipse de la grille de déplacement et de la position du rover.

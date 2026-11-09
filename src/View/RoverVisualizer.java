@@ -1,11 +1,13 @@
 package View;
 
-import Controllers.RoverController;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 import java.awt.CardLayout;
 import java.awt.Dimension;
+
+import Controllers.RoverController;
+
 
 /**
  * Fenêtre qui assemble les vues et le contrôleur de l'application.

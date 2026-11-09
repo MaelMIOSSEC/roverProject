@@ -1,11 +1,11 @@
 package Command;
 
-import Model.Direction;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import Model.Direction;
 
 /**
  * Transforme les lignes d'un script en commandes exécutables.
