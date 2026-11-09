@@ -12,7 +12,7 @@ import EventHandler.EventHandler;
 /**
  * Représente le terrain de jeu et les éléments qui occupent ses cases.
  */
-public class Board extends EventHandler /*extends RoverSubject*/ {
+public class Board /*extends RoverSubject*/ {
     /** Largeur du terrain, exprimée en cases. */
     private int width;
     /** Hauteur du terrain, exprimée en cases. */
@@ -23,6 +23,8 @@ public class Board extends EventHandler /*extends RoverSubject*/ {
     private final Map<Position, Ground> grounds;
     /** Éléments déposés ou robots présents sur le terrain. */
     private final Map<Position, Object> occupants;
+    /** EventHandler utilisé pour le terrain */
+    private final EventHandler eventHandler;
 
     /**
      * Crée un terrain avec ses dimensions, sa couleur et les cases de sol.
@@ -38,6 +40,7 @@ public class Board extends EventHandler /*extends RoverSubject*/ {
         this.color = color;
         this.grounds = grounds;
         this.occupants = new HashMap<Position, Object>();
+        this.eventHandler = new EventHandler();
     }
 
     /** @return largeur du terrain en cases */
@@ -94,7 +97,7 @@ public class Board extends EventHandler /*extends RoverSubject*/ {
         this.occupants.put(position, element);
 
         //this.notifyObserver(robot, this);
-        this.send(new RobotMovedEvent(this));
+        eventHandler.send(new RobotMovedEvent(this));
     }
 
     /**

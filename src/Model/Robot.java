@@ -17,13 +17,15 @@ import EventHandler.EventHandler;
 /**
  * Robot pouvant se déplacer sur un terrain et exécuter des commandes.
  */
-public class Robot extends EventHandler /*extends RoverSubject*/ {
+public class Robot /*extends RoverSubject*/ {
     /** Position actuelle du robot. */
     private Position position;
     /** Direction actuelle du robot. */
     private Direction direction;
     /** Terrain sur lequel le robot se déplace. */
     private final Board board;
+    /** EventHandler utilisé pour le robot */
+    private final EventHandler eventHandler;
 
     /** Parseur utilisé pour convertir les scripts en commandes. */
     private final CommandParser commandParser;
@@ -45,7 +47,13 @@ public class Robot extends EventHandler /*extends RoverSubject*/ {
         this.commandParser = new CommandParser();
         this.commandsList = new ArrayList<>();
         this.isRecording = true;
+
+        this.eventHandler = new EventHandler();
     }
+
+    /** @return eventHandler lié au robot */
+    public EventHandler getEventHandler() { return eventHandler; }
+
 
     /** @return position actuelle du robot */
     public Position getPosition() { return position; }
@@ -65,7 +73,7 @@ public class Robot extends EventHandler /*extends RoverSubject*/ {
         }
 
         // this.notifyObserver(this, this.board);
-        this.send(new RobotMovedEvent(this));
+        eventHandler.send(new RobotMovedEvent(this));
     }
 
     /** @return direction actuelle du robot */
@@ -78,7 +86,7 @@ public class Robot extends EventHandler /*extends RoverSubject*/ {
     public void setDirection(Direction direction) {
         this.direction = direction;
         //this.notifyObserver(this, this.board);
-        this.send(new RobotMovedEvent(this));
+        eventHandler.send(new RobotMovedEvent(this));
     }
 
     /** @return terrain associé au robot */

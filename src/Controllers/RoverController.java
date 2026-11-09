@@ -60,7 +60,7 @@ public final class RoverController {
         board = new Board(BOARD_SIZE, BOARD_SIZE, "blue", grounds);
         robot = new Robot(board);
 
-        robot.registerListener(RobotMovedEvent.class, mapView);
+        robot.getEventHandler().registerListener(RobotMovedEvent.class, mapView);
     }
 
     private void executeScript() {
