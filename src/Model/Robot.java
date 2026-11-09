@@ -12,7 +12,7 @@ import Command.*;
 
 import Events.RobotMovedEvent;
 
-import eventHandler.EventHandler;
+import EventHandler.EventHandler;
 
 /**
  * Robot pouvant se déplacer sur un terrain et exécuter des commandes.

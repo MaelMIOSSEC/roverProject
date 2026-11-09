@@ -7,7 +7,7 @@ import Events.RobotMovedEvent;
 
 import Exceptions.ImpossibleToPoseAtThisLocationException;
 
-import eventHandler.EventHandler;
+import EventHandler.EventHandler;
 
 /**
  * Représente le terrain de jeu et les éléments qui occupent ses cases.

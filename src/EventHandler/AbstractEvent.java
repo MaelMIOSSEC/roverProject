@@ -1,4 +1,4 @@
-package eventHandler;
+package EventHandler;
 
 import java.util.EventObject;
 
